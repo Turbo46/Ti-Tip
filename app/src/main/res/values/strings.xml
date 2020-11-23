@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Ti-Tip</string>
+    <string name="dashboard_running_storage">Titipan Berjalan</string>
+    <string name="dashboard_storage_history">Riwayat Titipan</string>
+    <string name="dashboard_more">Selengkapnya >></string>
+    <string name="create_new_goods_title">Penitipan Baru</string>
+    <string name="create_new_goods_name">Nama titipan</string>
+    <string name="create_new_goods_location_label">Lokasi penitipan</string>
+    <string name="create_new_goods_location">Pilih lokasi</string>
+    <string name="create_new_goods_submit_label">Buat Titipan</string>
+    <string name="grocery_label">Barang basah?</string>
+    <string name="fragile_label">Barang pecah belah?</string>
+    <string name="goods_detail_location_label">Lokasi titipan</string>
+    <string name="goods_detail_responsible_label">Penanggung jawab titipan</string>
+    <string name="goods_detail_status_label">Status</string>
+    <string name="goods_detail_dimension_label">Dimensi</string>
+    <string name="goods_detail_weight_label">Berat</string>
+    <string name="goods_detail_expired_label">Kadaluarsa</string>
+    <string name="goods_detail_est_price_label">Estimasi biaya</string>
+    <string name="pindah_titip">Pindah Titip</string>
+    <string name="return_goods">Kembalikan</string>
+</resources>

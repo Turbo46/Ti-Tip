@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    tools:context=".DetailTitipan">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/ic_launcher_foreground" />
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:background="@color/transparent"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_detail_titipan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/frame_back_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo">
+
+        <TextView
+            android:id="@+id/title_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/location_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/goods_detail_location_label"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_detail_titipan" />
+
+        <TextView
+            android:id="@+id/location_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/location_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/responsible_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/goods_detail_responsible_label"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/location_detail_titipan" />
+
+        <TextView
+            android:id="@+id/responsible_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/responsible_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/status_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/goods_detail_status_label"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/responsible_detail_titipan" />
+
+        <TextView
+            android:id="@+id/status_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            app:layout_constraintBottom_toBottomOf="@id/status_text_detail_titipan"
+            app:layout_constraintStart_toEndOf="@id/status_text_detail_titipan"
+            app:layout_constraintTop_toTopOf="@id/status_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/dimension_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/goods_detail_dimension_label"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/dimension_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            app:layout_constraintBottom_toBottomOf="@id/dimension_text_detail_titipan"
+            app:layout_constraintStart_toEndOf="@id/dimension_text_detail_titipan"
+            app:layout_constraintTop_toTopOf="@id/dimension_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/weight_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/goods_detail_weight_label"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dimension_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/weight_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            app:layout_constraintBottom_toBottomOf="@id/weight_text_detail_titipan"
+            app:layout_constraintStart_toEndOf="@id/weight_text_detail_titipan"
+            app:layout_constraintTop_toTopOf="@id/weight_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/grocery_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/grocery_label"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weight_text_detail_titipan" />
+
+        <CheckBox
+            android:id="@+id/grocery_chkbox_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="@id/grocery_text_detail_titipan"
+            app:layout_constraintStart_toEndOf="@id/grocery_text_detail_titipan"
+            app:layout_constraintTop_toTopOf="@id/grocery_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/fragile_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/fragile_label"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/grocery_text_detail_titipan" />
+
+        <CheckBox
+            android:id="@+id/fragile_chkbox_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="@id/fragile_text_detail_titipan"
+            app:layout_constraintStart_toEndOf="@id/fragile_text_detail_titipan"
+            app:layout_constraintTop_toTopOf="@id/fragile_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/expired_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/goods_detail_expired_label"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/exp_cost_guidelines_detail_titipan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragile_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/expired_date_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@id/exp_cost_guidelines_detail_titipan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/expired_text_detail_titipan" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/exp_cost_guidelines_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/est_price_text_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/goods_detail_est_price_label"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/exp_cost_guidelines_detail_titipan"
+            app:layout_constraintTop_toBottomOf="@id/fragile_text_detail_titipan" />
+
+        <TextView
+            android:id="@+id/est_price_detail_titipan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/exp_cost_guidelines_detail_titipan"
+            app:layout_constraintTop_toBottomOf="@id/est_price_text_detail_titipan" />
+
+        <Button
+            android:id="@+id/pindah_titip_btn_detail_titipan"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@color/btn_yellow"
+            android:text="@string/pindah_titip"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@id/exp_cost_guidelines_detail_titipan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/expired_date_detail_titipan" />
+
+        <Button
+            android:id="@+id/return_btn_detail_titipan"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@color/btn_green"
+            android:text="@string/return_goods"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/exp_cost_guidelines_detail_titipan"
+            app:layout_constraintTop_toBottomOf="@id/expired_date_detail_titipan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
