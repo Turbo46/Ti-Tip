@@ -8,10 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TiTip">
-        <activity android:name=".DetailTitipan"></activity>
-        <activity android:name=".TitipanBaru" />
-        <activity android:name=".Dashboard" />
+        android:theme="@style/Theme.Design.NoActionBar">
+        <activity android:name=".Dashboard" android:exported="true" />
+        <activity android:name=".DetailTitipan" android:exported="true" />
+        <activity android:name=".TitipanBaru" android:exported="true" />
     </application>
 
 </manifest>
