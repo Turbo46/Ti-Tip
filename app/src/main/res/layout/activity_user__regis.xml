@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     tools:context=".User_Regis">
-<<ImageView
+<ImageView
     android:id="@+id/logo"
     android:layout_width="81dp"
     android:layout_height="wrap_content"
@@ -100,5 +100,5 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pass_text"
+        app:layout_constraintTop_toBottomOf="@id/pass_text"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
