@@ -36,11 +36,18 @@
     <string name="help_txt">Ada 2 jenis akun yang bisa anda buat</string>
     <string name="user_acc_txt">1. Akun User</string>
     <string name="ket_user_acc"></string>
+    <string name="pindah_tombol">Pindahkan titipan</string>
+    <string name="estimasi_kirim">Estimasi biaya kirim</string>
+    <string name="lokasi_tujuan">Lokasi tujuan</string>
+    <string name="pilih_lokasi">Pilih lokasi</string>
     <string name="user_info_txt">Akun user dapat anda pilih jika ingin memakai layanan Ti-tip. Dimana layanan dapat dipakai secara penuh setelah melakukan registrasi</string>
     <string name="agent_acc_txt">2. Akun Agent</string>
     <string name="agent_info_txt">Anda dapat memilih akun agent jika ingin menjadi mitra kerja dari TI-tip. Agent akan bertindak sebagai penghubung antara merchant dan user, yang nantinya akan mengantar Titipan ke tempat user.</string>
     <string name="nama_lengkap_label">Nama Lengkap</string>
     <string name="NIK_label">NIK</string>
+    <string name="lokasi_sekarang">Lokasi sekarang</string>
     <string name="nope_label">No HP</string>
     <string name="mail_label">E-Mail</string>
+    <string name="nama_titipan">Nama titipan</string>
+    <string name="title_pindah_titip">Pindah Titip</string>
 </resources>
