@@ -19,4 +19,8 @@
     <string name="goods_detail_est_price_label">Estimasi biaya</string>
     <string name="pindah_titip">Pindah Titip</string>
     <string name="return_goods">Kembalikan</string>
+    <string name="konfirmasi_user">Konfirmasi</string>
+    <string name="peringatan_konfirmasi">Anda masih bisa mengubah pesanan</string>
+    <string name="lanjutan_peringatan">sebelum melakukan konfirmasi</string>
+    <string name="konfirmasi_titipan_user">Konfirmasi Ringkasan Titipan</string>
 </resources>
