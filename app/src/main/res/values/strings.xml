@@ -24,5 +24,9 @@
     <string name="login_btn_txt">Login</string>
     <string name="register_question">Apakah anda tidak mempunyai akun?</string>
     <string name="reg_btn_txt">Register</string>
+    <string name="konfirmasi_user">Konfirmasi</string>
+    <string name="peringatan_konfirmasi">Anda masih bisa mengubah pesanan</string>
+    <string name="lanjutan_peringatan">sebelum melakukan konfirmasi</string>
+    <string name="konfirmasi_titipan_user">Konfirmasi Ringkasan Titipan</string>
 
 </resources>
