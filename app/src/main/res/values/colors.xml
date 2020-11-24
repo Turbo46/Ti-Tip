@@ -23,4 +23,5 @@
 
     <color name="btn_bg">#6200EE</color>
     <color name="chk_bg">#6200EE</color>
+    <color name="field_bg">#40FFFFFF</color>
 </resources>
