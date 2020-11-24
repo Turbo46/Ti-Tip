@@ -28,5 +28,19 @@
     <string name="peringatan_konfirmasi">Anda masih bisa mengubah pesanan</string>
     <string name="lanjutan_peringatan">sebelum melakukan konfirmasi</string>
     <string name="konfirmasi_titipan_user">Konfirmasi Ringkasan Titipan</string>
-
+    <string name="ket_txt">Silahkan pilih akun yang ingin anda buat</string>
+    <string name="ket2_txt">Butuh Penjelasan mengenai akun?</string>
+    <string name="agen_btn">Agen</string>
+    <string name="user_btn">User</string>
+    <string name="help_btn">Help</string>
+    <string name="help_txt">Ada 2 jenis akun yang bisa anda buat</string>
+    <string name="user_acc_txt">1. Akun User</string>
+    <string name="ket_user_acc"></string>
+    <string name="user_info_txt">Akun user dapat anda pilih jika ingin memakai layanan Ti-tip. Dimana layanan dapat dipakai secara penuh setelah melakukan registrasi</string>
+    <string name="agent_acc_txt">2. Akun Agent</string>
+    <string name="agent_info_txt">Anda dapat memilih akun agent jika ingin menjadi mitra kerja dari TI-tip. Agent akan bertindak sebagai penghubung antara merchant dan user, yang nantinya akan mengantar Titipan ke tempat user.</string>
+    <string name="nama_lengkap_label">Nama Lengkap</string>
+    <string name="NIK_label">NIK</string>
+    <string name="nope_label">No HP</string>
+    <string name="mail_label">E-Mail</string>
 </resources>
