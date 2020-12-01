@@ -23,7 +23,7 @@ class User_Regis : AppCompatActivity() {
 
             val auth = FirebaseAuth.getInstance()
             auth.createUserWithEmailAndPassword(email, pass)
-                .addOnCompleteListener {
+                .addOnSuccessListener {
                     val uid = auth.uid?:""
                     val db = FirebaseFirestore.getInstance()
                     val user = User(nama, username, nik, phone)
