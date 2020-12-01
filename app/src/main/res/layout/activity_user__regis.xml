@@ -19,17 +19,17 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
     <EditText
-    android:id="@+id/fullname_text"
-    android:inputType="text"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/logo"
-    android:background="@color/field_bg"
-    android:hint="@string/nama_lengkap_label"
-    android:textColor="@color/black"/>
+        android:id="@+id/fullname_text"
+        android:inputType="textPersonName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        android:background="@color/field_bg"
+        android:hint="@string/nama_lengkap_label"
+        android:textColor="@color/black"/>
     <EditText
         android:id="@+id/username_text"
         android:inputType="text"
@@ -44,7 +44,7 @@
         android:textColor="@color/black"/>
     <EditText
         android:id="@+id/nik_text"
-        android:inputType="text"
+        android:inputType="numberDecimal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -56,7 +56,7 @@
         android:textColor="@color/black"/>
     <EditText
         android:id="@+id/nope_text"
-        android:inputType="text"
+        android:inputType="phone"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -68,7 +68,7 @@
         android:textColor="@color/black"/>
     <EditText
         android:id="@+id/email_text"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -80,7 +80,7 @@
         android:textColor="@color/black"/>
     <EditText
         android:id="@+id/pass_text"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
