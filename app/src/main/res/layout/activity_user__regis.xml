@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
-    tools:context=".User_Regis">
+    tools:context=".UserRegis">
 <ImageView
     android:id="@+id/logo"
     android:layout_width="81dp"

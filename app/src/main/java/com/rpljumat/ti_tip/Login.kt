@@ -15,7 +15,7 @@ class Login : AppCompatActivity() {
         }
 
         regis_btn.setOnClickListener {
-            val intent = Intent(this, User_Regis::class.java)
+            val intent = Intent(this, UserRegis::class.java)
             startActivity(intent)
         }
     }

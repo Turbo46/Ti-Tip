@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_user__regis.*
 
-class User_Regis : AppCompatActivity() {
+class UserRegis : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user__regis)
@@ -31,17 +31,14 @@ class User_Regis : AppCompatActivity() {
                     db.collection("users")
                         .document(uid)
                         .set(user)
-                        .addOnSuccessListener {
-                            Toast.makeText(this@User_Regis, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, Login::class.java)
-                            startActivity(intent)
-                        }
+
+                    Toast.makeText(this@UserRegis, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, Login::class.java)
+                    startActivity(intent)
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this@User_Regis, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@UserRegis, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 }
-
-class User(val nama: String, val username: String, val nik: String, val phone: String)
