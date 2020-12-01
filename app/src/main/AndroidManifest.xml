@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name=".PindahTitip" android:exported="true" />
+        <activity android:name=".PindahTitip" android:exported="true"></activity>
         <activity
             android:name=".User_Regis"
             android:exported="true" />
