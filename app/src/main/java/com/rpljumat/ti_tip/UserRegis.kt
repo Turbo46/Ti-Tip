@@ -14,8 +14,9 @@ class UserRegis : AppCompatActivity() {
         setContentView(R.layout.activity_user__regis)
 
         login_btn_user.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
+            val login = Intent(this, Login::class.java)
+            startActivity(login)
+            finish()
         }
         regis_btn.setOnClickListener {
             val nama = fullname_text.text.toString()
@@ -24,6 +25,31 @@ class UserRegis : AppCompatActivity() {
             val phone = nope_text.text.toString()
             val email = email_text.text.toString()
             val pass = pass_text.text.toString()
+
+            if(nama.isEmpty()){
+                Toast.makeText(this@UserRegis, "Nama belum diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            else if(username.isEmpty()){
+                Toast.makeText(this@UserRegis, "Username belum diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            else if(nik.isEmpty()){
+                Toast.makeText(this@UserRegis, "NIK belum diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            else if(phone.isEmpty()){
+                Toast.makeText(this@UserRegis, "Nomor HP belum diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            else if(email.isEmpty()){
+                Toast.makeText(this@UserRegis, "Email belum diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            else if(pass.isEmpty()){
+                Toast.makeText(this@UserRegis, "Password belum diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val auth = FirebaseAuth.getInstance()
             auth.createUserWithEmailAndPassword(email, pass)
@@ -35,10 +61,15 @@ class UserRegis : AppCompatActivity() {
                     db.collection("users")
                         .document(uid)
                         .set(user)
-
-                    Toast.makeText(this@UserRegis, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, Login::class.java)
-                    startActivity(intent)
+                        .addOnSuccessListener {
+                            Toast.makeText(this@UserRegis, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
+                            val dashboard = Intent(this, Dashboard::class.java)
+                            startActivity(dashboard)
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this@UserRegis, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
+                        }
                 }
                 .addOnFailureListener {
                     Toast.makeText(this@UserRegis, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
