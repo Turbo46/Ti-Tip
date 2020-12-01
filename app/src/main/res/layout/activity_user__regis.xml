@@ -90,17 +90,31 @@
         android:background="@color/field_bg"
         android:hint="@string/password_label"
         android:textColor="@color/black"/>
+
     <Button
         android:id="@+id/regis_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="110dp"
         android:background="@color/btn_yellow"
         android:text="@string/reg_btn_txt"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pass_text"/>
+        app:layout_constraintTop_toBottomOf="@id/pass_text" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/btn_yellow"
+        android:textColor="@color/black"
+        android:text="@string/login_btn_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pass_text" />
 
     <TextView
         android:id="@+id/ket_reg2"
@@ -116,7 +130,7 @@
     <Button
         android:id="@+id/help_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginTop="16dp"
         android:background="@color/btn_yellow"
         android:text="@string/help_btn"
