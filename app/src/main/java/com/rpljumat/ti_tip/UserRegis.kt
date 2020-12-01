@@ -37,7 +37,8 @@ class UserRegis : AppCompatActivity() {
                         .set(user)
 
                     Toast.makeText(this@UserRegis, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
-
+                    val intent = Intent(this, Login::class.java)
+                    startActivity(intent)
                 }
                 .addOnFailureListener {
                     Toast.makeText(this@UserRegis, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
