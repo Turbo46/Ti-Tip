@@ -18,6 +18,11 @@ class UserRegis : AppCompatActivity() {
             startActivity(login)
             finish()
         }
+
+        help_btn.setOnClickListener {
+            val intent = Intent(this, Help::class.java)
+            startActivity(intent)
+        }
         regis_btn.setOnClickListener {
             val nama = fullname_text.text.toString()
             val username = username_text.text.toString()
