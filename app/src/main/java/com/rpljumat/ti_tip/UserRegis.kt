@@ -13,6 +13,10 @@ class UserRegis : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user__regis)
 
+        login_btn_user.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
         regis_btn.setOnClickListener {
             val nama = fullname_text.text.toString()
             val username = username_text.text.toString()
@@ -33,8 +37,7 @@ class UserRegis : AppCompatActivity() {
                         .set(user)
 
                     Toast.makeText(this@UserRegis, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, Login::class.java)
-                    startActivity(intent)
+
                 }
                 .addOnFailureListener {
                     Toast.makeText(this@UserRegis, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
