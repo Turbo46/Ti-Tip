@@ -29,7 +29,7 @@ class Dashboard : AppCompatActivity() {
             }
 
         btn_add_titipan.setOnClickListener {
-            val newTitipan = Intent(this, Dashboard::class.java)
+            val newTitipan = Intent(this, TitipanBaru::class.java)
             startActivity(newTitipan)
         }
     }
