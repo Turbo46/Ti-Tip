@@ -170,6 +170,7 @@
                     app:layout_constraintTop_toTopOf="@id/fragile_text_new_titipan" />
 
                 <Button
+                    android:id="@+id/btn_buat_titipan"
                     style="@style/Widget.AppCompat.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

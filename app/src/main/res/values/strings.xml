@@ -53,4 +53,6 @@
     <string name="mail_label">E-Mail</string>
     <string name="nama_titipan">Nama titipan</string>
     <string name="title_pindah_titip">Pindah Titip</string>
+    <string name="title_activity_peta_pilih_agen">Map</string>
+    <string name="choosen_loc_label">Lokasi Terpilih: </string>
 </resources>

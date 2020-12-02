@@ -13,5 +13,13 @@ class TitipanBaru : AppCompatActivity() {
         back.setOnClickListener {
             finish()
         }
+        location_btn_new_titipan.setOnClickListener {
+            val peta = Intent(this, PetaPilihAgen::class.java)
+            startActivity(peta)
+        }
+        btn_buat_titipan.setOnClickListener {
+
+        }
+
     }
 }

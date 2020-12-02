@@ -17,16 +17,16 @@ class Dashboard : AppCompatActivity() {
         val currentUser = auth.currentUser
         val uid = currentUser?.uid
 
-        var db = FirebaseFirestore.getInstance()
-        db.collection("goods")
-            .document(uid?:"")
-            .get()
-            .addOnSuccessListener {
-
-            }
-            .addOnFailureListener {
-                return@addOnFailureListener
-            }
+//        var db = FirebaseFirestore.getInstance()
+//        db.collection("goods")
+//            .document(uid?:"")
+//            .get()
+//            .addOnSuccessListener {
+//
+//            }
+//            .addOnFailureListener {
+//                return@addOnFailureListener
+//            }
 
         btn_add_titipan.setOnClickListener {
             val newTitipan = Intent(this, TitipanBaru::class.java)
