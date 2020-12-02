@@ -55,4 +55,6 @@
     <string name="title_pindah_titip">Pindah Titip</string>
     <string name="title_activity_peta_pilih_agen">Map</string>
     <string name="choosen_loc_label">Lokasi Terpilih: </string>
+    <string name="search_loc_label">Pencarian Lokasi …</string>
+    <string name="search">Cari</string>
 </resources>
