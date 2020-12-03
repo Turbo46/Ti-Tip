@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     tools:context=".Help">
+
+    <ImageButton
+        android:id="@+id/tombol_back_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleY="2"
+        android:scaleX="2"
+        android:scaleType="center"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_back"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/logo"
         android:layout_width="81dp"
@@ -18,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-<TextView
+    <TextView
     android:id="@+id/help_title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -28,12 +42,13 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/logo"/>
+
     <TextView
         android:id="@+id/help_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginEnd="235dp"
         android:text="@string/user_acc_txt"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,9 +57,10 @@
 
     <TextView
         android:id="@+id/user_info"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginEnd="128dp"
         android:lineSpacingExtra="8dp"
         android:text="@string/user_info_txt"
         android:textColor="@color/black"
@@ -52,27 +68,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/help_user" />
 
-    <TextView
-        android:id="@+id/help_agent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="200dp"
-        android:text="@string/agent_acc_txt"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_info"/>
 
-    <TextView
-        android:id="@+id/agent_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:lineSpacingExtra="8dp"
-        android:text="@string/agent_info_txt"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/help_agent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
