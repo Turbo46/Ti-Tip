@@ -33,8 +33,8 @@
     <string name="agen_btn">Agen</string>
     <string name="user_btn">User</string>
     <string name="help_btn">Help</string>
-    <string name="help_txt">Ada 2 jenis akun yang bisa anda buat</string>
-    <string name="user_acc_txt">1. Akun User</string>
+    <string name="help_txt">Berikut merupakan penjelasan mengenai akun user</string>
+    <string name="user_acc_txt">Akun User</string>
     <string name="pindah_tombol">Pindahkan titipan</string>
     <string name="estimasi_kirim">Estimasi biaya kirim</string>
     <string name="lokasi_tujuan">Lokasi tujuan</string>
