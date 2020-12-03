@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     tools:context=".Help">
+
+    <ImageButton
+        android:id="@+id/tombol_back_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleY="2"
+        android:scaleX="2"
+        android:scaleType="center"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_back"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/logo"
         android:layout_width="81dp"
@@ -18,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-<TextView
+    <TextView
     android:id="@+id/help_title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
