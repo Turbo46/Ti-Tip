@@ -56,5 +56,6 @@
     <string name="title_activity_peta_pilih_agen">Map</string>
     <string name="choosen_loc_label">Lokasi Terpilih: </string>
     <string name="search_loc_label">Pencarian Lokasi …</string>
-    <string name="search">Cari</string>
+    <string name="loc_detail_format_new_titipan">%1$s\n%2$s</string>
+    <string name="test">Test</string>
 </resources>

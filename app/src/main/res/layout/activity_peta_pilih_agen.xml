@@ -31,6 +31,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="24dp"
+        android:scaleType="center"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:visibility="invisible"
+        android:src="@drawable/ic_done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/label_agent_loc"
         android:layout_width="wrap_content"
@@ -74,8 +88,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_agent_loc" />
 
-    <EditText
+    <fragment
         android:id="@+id/search_field_loc"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
@@ -83,10 +98,6 @@
         android:layout_marginEnd="8dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:background="@color/field_bg"
-        android:imeOptions="actionDone|actionSearch"
-        android:hint="@string/search_loc_label"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/choosen_agent_loc" />

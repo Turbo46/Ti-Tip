@@ -1,18 +1,18 @@
 package com.rpljumat.ti_tip
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.widget.EditText
-import android.widget.TextView
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -20,13 +20,17 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_peta_pilih_agen.*
-import java.util.*
+import kotlinx.android.synthetic.main.activity_peta_pilih_agen.back
+import kotlinx.android.synthetic.main.activity_titipan_baru.*
 
-class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, TextView.OnEditorActionListener {
+class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     companion object{
@@ -42,9 +46,22 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        search_field_loc.setOnEditorActionListener(this)
+        Places.initialize(applicationContext, "AIzaSyAIFeyTS267frdxcX7ok5CXT8CmDvJxRsU")
+        initAutoCompleteFragment()
 
         back.setOnClickListener {
+            finish()
+        }
+
+        done.setOnClickListener {
+            val name = choosen_agent.text
+            val addr = choosen_agent_loc.text
+
+            // Pass address data to TitipanBaru
+            val data = Intent(this, TitipanBaru::class.java)
+            data.putExtra("Alamat", "$name\n$addr")
+            setResult(Activity.RESULT_OK, data)
+
             finish()
         }
     }
@@ -68,7 +85,7 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 MY_PERMISSION_ACCESS_FINE_LOCATION
             )
             return
@@ -80,7 +97,7 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 MY_PERMISSION_ACCESS_COARSE_LOCATION
             )
             return
@@ -119,7 +136,7 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
                         .newLatLngZoom(loc, 15f)
                 )
 
-                googleMap.setOnMarkerClickListener(this);
+                googleMap.setOnMarkerClickListener(this)
             }
     }
 
@@ -134,24 +151,23 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
         choosen_agent.text = name
         choosen_agent_loc.text = addr
 
+        done.visibility = View.VISIBLE
+
         return true
     }
 
-    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-        Log.d("PetaPilihAgen", "$v $actionId $event")
-//        when(v) {
-//            search_field_loc -> {
-//                locEditorHandler()
-//            }
-//        }
-        return true
-    }
+    private fun initAutoCompleteFragment() {
+        val autoCompleteFragment = supportFragmentManager
+            .findFragmentById(R.id.search_field_loc) as AutocompleteSupportFragment
+        autoCompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+        autoCompleteFragment.setOnPlaceSelectedListener(object: PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
 
-    private fun locEditorHandler() {
-        val text = search_field_loc.text.toString()
-        val geocoder = Geocoder(this)
-        val addr_list = geocoder.getFromLocationName(text, 100)
-
-        Log.d("PetaPilihAgen", "$addr_list")
+            }
+            override fun onError(status: Status) {
+//                TODO("Not yet implemented")
+                Log.d("PetaPilihAgen", "$status")
+            }
+        })
     }
 }
