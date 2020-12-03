@@ -72,6 +72,7 @@
         android:id="@+id/tombol_konfirmasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="konfirmasi"
         android:layout_marginTop="50dp"
         android:background="@color/btn_yellow"
         android:text="@string/konfirmasi_user"
