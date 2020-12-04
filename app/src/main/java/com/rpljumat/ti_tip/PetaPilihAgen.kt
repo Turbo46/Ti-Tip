@@ -58,9 +58,9 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
             val addr = choosen_agent_loc.text
 
             // Pass address data to TitipanBaru
-            val data = Intent(this, TitipanBaru::class.java)
-            data.putExtra("Alamat", "$name\n$addr")
-            setResult(Activity.RESULT_OK, data)
+            val alamat = Intent(this, TitipanBaru::class.java)
+            alamat.putExtra("Alamat", "$name\n$addr")
+            setResult(Activity.RESULT_OK, alamat)
 
             finish()
         }
