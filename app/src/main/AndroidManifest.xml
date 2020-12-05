@@ -32,7 +32,7 @@
 
         <activity
             android:name=".PetaPilihAgen"
-            android:label="@string/title_activity_peta_pilih_agen"></activity>
+            android:label="@string/title_activity_peta_pilih_agen" />
         <activity
             android:name=".PindahTitip"
             android:exported="true" />
