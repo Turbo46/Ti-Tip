@@ -31,10 +31,10 @@ class Dashboard : AppCompatActivity() {
                 var prevId = running_title.id
                 for(goods in it) {
                     val data = goods.data
-                    val status = data.get("status") as Int
+                    val status = data["status"] as Int
                     if(status == REJECTED || status == RETURNED || status == EXPIRED) continue
 
-                    val nama = data.get("nama") as String
+                    val nama = data["nama"] as String
 
                     val containerId = createTitipanItemBg(prevId)
                     val titleId = createTitipanItemTitle(containerId, nama)
