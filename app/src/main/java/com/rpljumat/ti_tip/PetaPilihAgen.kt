@@ -141,12 +141,10 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
-        val geocoder = Geocoder(this)
-        val latitude = marker!!.position!!.latitude
-        val longitude = marker.position.longitude
+        val lat = marker!!.position!!.latitude
+        val long = marker.position.longitude
         val name = marker.title
-        val addrList = geocoder.getFromLocation(latitude, longitude, 1)
-        val addr = addrList[0].getAddressLine(0)
+        val addr = getAgentLoc(Pair(lat, long), this)
 
         choosen_agent.text = name
         choosen_agent_loc.text = addr

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Ti-Tip</string>
-    <string name="dashboard_running_storage">Titipan Berjalan</string>
     <string name="dashboard_storage_history">Riwayat Titipan</string>
     <string name="dashboard_more">Selengkapnya >></string>
     <string name="create_new_goods_title">Penitipan Baru</string>
@@ -57,7 +56,4 @@
     <string name="choosen_loc_label">Lokasi Terpilih: </string>
     <string name="search_loc_label">Pencarian Lokasi …</string>
     <string name="loc_detail_format_new_titipan">%1$s\n%2$s</string>
-    <string name="awaiting_confirmation">Menunggu konfirmasi</string>
-    <string name="stored">Dititipkan</string>
-    <string name="awaiting_return">Menunggu pengembalian</string>
 </resources>
