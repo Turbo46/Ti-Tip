@@ -1,8 +1,13 @@
 package com.rpljumat.ti_tip
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -18,11 +23,28 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Dashboard : AppCompatActivity() {
+    private lateinit var activityContext: Dashboard
+    var conn = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        activityContext = this
+
+        // Check internet connection first
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.Default) {
+                checkNetworkConnection()
+            }
+            if(!conn) {
+                alertNoConnection()
+                return@launch
+            }
+        }
 
         expand_running.tag = R.drawable.ic_collapse
         expand_history.tag = R.drawable.ic_collapse
@@ -97,6 +119,43 @@ class Dashboard : AppCompatActivity() {
         }
     }
 
+    private fun checkNetworkConnection() {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+        cm.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    conn = true
+                }
+
+                override fun onUnavailable() {
+                    super.onUnavailable()
+                    conn = false
+                }
+            }
+        )
+    }
+
+    private fun alertNoConnection() {
+        val builder = AlertDialog.Builder(activityContext)
+        builder.setTitle("Tidak ada koneksi!")
+            .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
+            .setPositiveButton("Coba lagi") { _: DialogInterface, _: Int ->
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Default) {
+                        checkNetworkConnection()
+                    }
+                    if(!conn){
+                        alertNoConnection()
+                    }
+                }
+            }
+            .setCancelable(false)
+        builder.show()
+    }
+
     private fun settle(goods: QuerySnapshot) {
         CoroutineScope(Dispatchers.Main).launch {
             var prevIdRun = running_title.id
@@ -109,10 +168,10 @@ class Dashboard : AppCompatActivity() {
                 val status = (data["status"] as Long).toInt()
                 val goodId = good.id
                 val nama = data["nama"] as String
-                val length = (data["height"] as Long).toInt()
-                val width = (data["width"] as Long).toInt()
-                val height = (data["height"] as Long).toInt()
-                val weight = (data["weight"] as Long).toInt()
+                val length = (data["height"] as Double).toFloat()
+                val width = (data["width"] as Double).toFloat()
+                val height = (data["height"] as Double).toFloat()
+                val weight = (data["weight"] as Double).toFloat()
                 val estPrice = (data["estPrice"] as Long).toInt()
                 val exp = data["exp"] as Long
 
@@ -283,8 +342,8 @@ class Dashboard : AppCompatActivity() {
         return id
     }
 
-    private fun createTitipanItemDimWeight(containerId: Int, prevId: Int,
-                                           length: Int, width: Int, height: Int, weight: Int): Int {
+    private fun createTitipanItemDimWeight(containerId: Int, prevId: Int, length: Float,
+                                           width: Float, height: Float, weight: Float): Int {
 
         val dimWeightTextView = TextView(this)
         dimWeightTextView.layoutParams = Constraints.LayoutParams(

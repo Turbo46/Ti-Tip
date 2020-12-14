@@ -1,6 +1,11 @@
 package com.rpljumat.ti_tip
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -9,9 +14,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_user__regis.*
 
 class UserRegis : AppCompatActivity() {
+    private lateinit var activityContext: UserRegis
+    var conn = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user__regis)
+
+        activityContext = this
 
         login_btn_user.setOnClickListener {
             val login = Intent(this, Login::class.java)
@@ -80,5 +90,34 @@ class UserRegis : AppCompatActivity() {
                     Toast.makeText(this@UserRegis, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+
+    private fun checkNetworkConnection() {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+        cm.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    conn = true
+                }
+
+                override fun onUnavailable() {
+                    super.onUnavailable()
+                    conn = false
+                }
+            }
+        )
+    }
+
+    private fun alertNoConnection() {
+        val builder = AlertDialog.Builder(activityContext)
+        builder.setTitle("Tidak ada koneksi!")
+            .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
+            .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->
+
+            }
+        builder.show()
     }
 }

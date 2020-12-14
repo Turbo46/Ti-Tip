@@ -2,9 +2,13 @@ package com.rpljumat.ti_tip
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,12 +30,17 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_peta_pilih_agen.*
-import kotlinx.android.synthetic.main.activity_peta_pilih_agen.back
-import kotlinx.android.synthetic.main.activity_titipan_baru.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private lateinit var activityContext: PetaPilihAgen
+    var conn = false
 
     companion object{
         const val MY_PERMISSION_ACCESS_FINE_LOCATION = 1
@@ -41,6 +50,20 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_peta_pilih_agen)
+
+        activityContext = this
+
+        // Check internet connection first
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.Default) {
+                checkNetworkConnection()
+            }
+            if(!conn) {
+                alertNoConnection()
+                return@launch
+            }
+        }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -64,6 +87,35 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
 
             finish()
         }
+    }
+
+    private fun checkNetworkConnection() {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+        cm.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    conn = true
+                }
+
+                override fun onUnavailable() {
+                    super.onUnavailable()
+                    conn = false
+                }
+            }
+        )
+    }
+
+    private fun alertNoConnection() {
+        val builder = AlertDialog.Builder(activityContext)
+        builder.setTitle("Tidak ada koneksi!")
+            .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
+            .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->
+                finish()
+            }
+        builder.show()
     }
 
     /**

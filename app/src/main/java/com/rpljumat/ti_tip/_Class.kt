@@ -25,7 +25,7 @@ const val MS_SEHARI = 86_400_000
 class User(val nama: String, val username: String, val nik: String, val phone: String)
 class Goods(val userId: String, val agentId: String, val nama: String, val agentCnt: Int,
                    val status: Int, val ts: Long, val exp: Long, val estPrice: Int,
-                   val length: Int, val width: Int, val height: Int, val weight: Int,
+                   val length: Float, val width: Float, val height: Float, val weight: Float,
                    val fragile: Boolean, val grocery: Boolean)
 
 fun Float.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
