@@ -2,6 +2,7 @@ package com.rpljumat.ti_tip
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.location.Geocoder
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -21,6 +22,8 @@ const val RUN_BLOCK = 1
 const val HIST_BLOCK = 2
 
 const val MS_SEHARI = 86_400_000
+
+val black = Color.parseColor("#000000")
 
 class User(val nama: String, val username: String, val nik: String, val phone: String)
 class Goods(val userId: String, val agentId: String, val nama: String, val agentCnt: Int,

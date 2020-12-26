@@ -8,6 +8,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -21,7 +22,6 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class TitipanBaru : AppCompatActivity() {
-    private lateinit var activityContext: TitipanBaru
     var conn = false
 
     companion object {
@@ -31,8 +31,6 @@ class TitipanBaru : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_titipan_baru)
-
-        activityContext = this
 
         back.setOnClickListener {
             finish()
@@ -66,7 +64,7 @@ class TitipanBaru : AppCompatActivity() {
                     return@launch
                 }
 
-                val builder = AlertDialog.Builder(activityContext)
+                val builder = AlertDialog.Builder(this@TitipanBaru)
                 builder.setMessage("Informasi yang dimasukkan sudah benar?")
                     .setPositiveButton("Ya") { _: DialogInterface, _: Int ->
                         storeNewTitipan()
@@ -110,7 +108,7 @@ class TitipanBaru : AppCompatActivity() {
     }
 
     private fun alertNoConnection() {
-        val builder = AlertDialog.Builder(activityContext)
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("Tidak ada koneksi!")
             .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
             .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->
@@ -124,25 +122,31 @@ class TitipanBaru : AppCompatActivity() {
             val auth = FirebaseAuth.getInstance()
             val uId = auth.uid?:""
 
-            val locTxt = location_detail_text_new_titipan.text.lines()
-            val nama = locTxt[0]
+            val namaTitipan = name_new_titipan.text.toString()
+            if(namaTitipan == "") {
+                Toast.makeText(this@TitipanBaru, "Nama titipan tidak boleh kosong!",
+                    Toast.LENGTH_SHORT).show()
+                return@launch
+            }
 
-            if(nama == "") {
+            val loc = location_detail_text_new_titipan.text.toString()
+            if(loc == "") {
                 Toast.makeText(this@TitipanBaru, "Lokasi belum dipilih!", Toast.LENGTH_SHORT).show()
                 return@launch
             }
 
+            val agentName = loc.lines()[0]
+
             val db = FirebaseFirestore.getInstance()
-            val agentId = getAgentId(db, nama)
+            val agentId = getAgentId(db, agentName)
 
             val fragileStat = fragile_chkbox_new_titipan.isChecked
             val groceryStat = grocery_chkbox_new_titipan.isChecked
 
             val currDT = System.currentTimeMillis()
-            val expDays = if(groceryStat) 1 else 7
-            val expDT = currDT + expDays * MS_SEHARI
+            val expDT = currDT + MS_SEHARI
 
-            val goods = Goods(uId, agentId, nama, 1,
+            val goods = Goods(uId, agentId, namaTitipan, 1,
                 AWAITING_CONFIRMATION, currDT, expDT, 15_000,
                 0f, 0f, 0f, 0f,
                 fragileStat, groceryStat)
@@ -161,23 +165,25 @@ class TitipanBaru : AppCompatActivity() {
                         as NotificationManager
                     val notifBuilder = NotificationCompat.Builder(applicationContext, "Ti-Tip")
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Titipan $nama berhasil dibuat")
-                        .setContentText("Silahkan selesai titipan dalam $expDays hari")
+                        .setContentTitle("Titipan $namaTitipan berhasil dibuat")
+                        .setContentText("Silahkan selesai titipan dalam 1 x 24 jam")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true)
                     notifMgr.notify(0, notifBuilder.build())
+
+                    finish()
                 }
                 .addOnFailureListener {
                     Toast.makeText(this@TitipanBaru, "Penitipan gagal!", Toast.LENGTH_SHORT)
                         .show()
+                    finish()
                 }
-
-            finish()
         }
     }
 
-    private suspend fun getAgentId(db: FirebaseFirestore, nama: String): String {
-        val allAgent = db.collection("agent").whereEqualTo("agentName", nama).get().await()
+    private suspend fun getAgentId(db: FirebaseFirestore, agentName: String): String {
+        Log.d("TitipanBaru", agentName)
+        val allAgent = db.collection("agent").whereEqualTo("agentName", agentName).get().await()
         return allAgent.documents[0].id
     }
 

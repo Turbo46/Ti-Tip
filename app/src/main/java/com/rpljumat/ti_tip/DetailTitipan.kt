@@ -62,7 +62,7 @@ class DetailTitipan : AppCompatActivity() {
                     val agentId = data["agentId"] as String
                     val agentName = getAgentName(agentId)
                     val agentCoords = getAgentCoords(agentId)
-                    val agentLoc = getAgentLoc(agentCoords, applicationContext)
+                    val agentLoc = getAgentLoc(agentCoords, this@DetailTitipan)
                     val agentPerson = getAgentPerson(agentId)
                     val length = (data["length"] as Double).toFloat()
                     val width = (data["width"] as Double).toFloat()

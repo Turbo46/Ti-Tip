@@ -29,6 +29,8 @@ class Dashboard : AppCompatActivity() {
     private lateinit var activityContext: Dashboard
     var conn = false
 
+    private var containerId = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -173,7 +175,6 @@ class Dashboard : AppCompatActivity() {
                 val height = (data["height"] as Double).toFloat()
                 val weight = (data["weight"] as Double).toFloat()
                 val estPrice = (data["estPrice"] as Long).toInt()
-                val exp = data["exp"] as Long
 
                 val agentId =
                     if(status == AWAITING_PINDAH_TITIP_ORG ||
@@ -184,7 +185,7 @@ class Dashboard : AppCompatActivity() {
                     }
                 val agentName = getAgentName(agentId)
 
-                var containerId: Int
+                // Create background for each good
                 if(status == REJECTED || status == RETURNED || status == EXPIRED) {
                     if(histCnt == 5) continue
                     containerId = createTitipanItemBg(goodId, prevIdHist, HIST_BLOCK)
@@ -199,16 +200,23 @@ class Dashboard : AppCompatActivity() {
                     runCnt++
                 }
 
-                var prevIdInner = createTitipanItemTitle(containerId, nama)
-                createTitipanItemStatus(containerId, status)
-                prevIdInner = createTitipanItemAgentName(containerId, prevIdInner,
-                    agentName, status)
-                if(length > 0) prevIdInner = createTitipanItemDimWeight(containerId, prevIdInner,
-                    length, width, height, weight)
+                // Create elements for each good
+                var prevIdInner = createTitipanItemTitle(nama)
+                createTitipanItemStatus(status)
+                prevIdInner = createTitipanItemAgentName(prevIdInner, agentName, status)
+                if(status != AWAITING_CONFIRMATION && status != REJECTED &&
+                    status != RETURNED && status != EXPIRED) prevIdInner =
+                    createTitipanItemDimWeight(prevIdInner, length, width, height, weight)
                 if(status != REJECTED && status != EXPIRED) prevIdInner =
-                    createTitipanItemEstPrice(containerId, prevIdInner, status, estPrice)
-                if(status != REJECTED && status != RETURNED && status != EXPIRED)
-                    createTitipanItemExp(containerId, prevIdInner, exp)
+                    createTitipanItemEstPrice(prevIdInner, status, estPrice)
+                if(status != REJECTED && status != RETURNED && status != EXPIRED) {
+                    val exp = data["exp"] as Long
+                    createTitipanItemExp(prevIdInner, exp, status)
+                }
+                if(status == RETURNED) {
+                    val returnTs = data["returnTs"] as Long
+                    createTitipanItemReturnTs(prevIdInner, returnTs)
+                }
             }
 
             setRunCnt(runCnt)
@@ -229,7 +237,8 @@ class Dashboard : AppCompatActivity() {
         container.id = id
         container.setBackgroundResource(R.color.frame_front_bg)
 
-        container_running.addView(container)
+        if(block == RUN_BLOCK) container_running.addView(container)
+        else container_history.addView(container)
 
         val constraintSet = ConstraintSet()
         val parentCL = if(block == HIST_BLOCK) container_history else container_running
@@ -251,7 +260,7 @@ class Dashboard : AppCompatActivity() {
         return id
     }
 
-    private fun createTitipanItemTitle(containerId: Int, nama: String): Int {
+    private fun createTitipanItemTitle(nama: String): Int {
         val titleTextView = TextView(this)
         titleTextView.layoutParams = Constraints.LayoutParams(
             Constraints.LayoutParams.WRAP_CONTENT,
@@ -262,8 +271,6 @@ class Dashboard : AppCompatActivity() {
         titleTextView.id = id
 
         titleTextView.text = nama
-
-        val black = Color.parseColor("#000000")
         titleTextView.setTextColor(black)
 
         titleTextView.textSize = 16f
@@ -281,7 +288,7 @@ class Dashboard : AppCompatActivity() {
         return id
     }
 
-    private fun createTitipanItemStatus(containerId: Int, status: Int) {
+    private fun createTitipanItemStatus(status: Int) {
         val statusTextView = TextView(this)
         statusTextView.layoutParams = Constraints.LayoutParams(
             Constraints.LayoutParams.WRAP_CONTENT,
@@ -307,9 +314,7 @@ class Dashboard : AppCompatActivity() {
         constraintSet.applyTo(container)
     }
 
-    private fun createTitipanItemAgentName(containerId: Int, prevId: Int,
-                                           agentName: String, status: Int): Int {
-
+    private fun createTitipanItemAgentName(prevId: Int, agentName: String, status: Int): Int {
         val agentNameTextView = TextView(this)
         agentNameTextView.layoutParams = Constraints.LayoutParams(
             Constraints.LayoutParams.WRAP_CONTENT,
@@ -326,8 +331,6 @@ class Dashboard : AppCompatActivity() {
                 "Lokasi: $agentName"
             }
         agentNameTextView.text = label
-
-        val black = Color.parseColor("#000000")
         agentNameTextView.setTextColor(black)
 
         val container = findViewById<ConstraintLayout>(containerId)
@@ -342,8 +345,8 @@ class Dashboard : AppCompatActivity() {
         return id
     }
 
-    private fun createTitipanItemDimWeight(containerId: Int, prevId: Int, length: Float,
-                                           width: Float, height: Float, weight: Float): Int {
+    private fun createTitipanItemDimWeight(prevId: Int, length: Float, width: Float, height: Float,
+                                           weight: Float): Int {
 
         val dimWeightTextView = TextView(this)
         dimWeightTextView.layoutParams = Constraints.LayoutParams(
@@ -356,8 +359,6 @@ class Dashboard : AppCompatActivity() {
 
         val text = "Dimensi/berat: ${length}cm x ${width}cm x ${height}cm / ${weight}kg"
         dimWeightTextView.text = text
-
-        val black = Color.parseColor("#000000")
         dimWeightTextView.setTextColor(black)
 
         val container = findViewById<ConstraintLayout>(containerId)
@@ -372,9 +373,7 @@ class Dashboard : AppCompatActivity() {
         return id
     }
 
-    private fun createTitipanItemEstPrice(containerId: Int, prevId: Int,
-                                          status: Int, estPrice: Int): Int {
-
+    private fun createTitipanItemEstPrice(prevId: Int, status: Int, estPrice: Int): Int {
         val estPriceTextView = TextView(this)
         estPriceTextView.layoutParams = Constraints.LayoutParams(
             Constraints.LayoutParams.WRAP_CONTENT,
@@ -387,8 +386,6 @@ class Dashboard : AppCompatActivity() {
         val text = if(status == AWAITING_CONFIRMATION)
             "Biaya penitipan: Rp$estPrice" else "Est. harga kembali: Rp$estPrice"
         estPriceTextView.text = text
-
-        val black = Color.parseColor("#000000")
         estPriceTextView.setTextColor(black)
 
         val container = findViewById<ConstraintLayout>(containerId)
@@ -403,7 +400,7 @@ class Dashboard : AppCompatActivity() {
         return id
     }
 
-    private fun createTitipanItemExp(containerId: Int, prevId: Int, exp: Long) {
+    private fun createTitipanItemExp(prevId: Int, exp: Long, status: Int) {
         val expTextView = TextView(this)
         expTextView.layoutParams = Constraints.LayoutParams(
             Constraints.LayoutParams.WRAP_CONTENT,
@@ -415,10 +412,10 @@ class Dashboard : AppCompatActivity() {
 
         val dtStr = exp.toDT()
 
-        val text = "Kadalursa pada: $dtStr"
+        val text =
+            if(status == AWAITING_CONFIRMATION) "Titipkan sebelum: $dtStr"
+            else "Kadalursa pada: $dtStr"
         expTextView.text = text
-
-        val black = Color.parseColor("#000000")
         expTextView.setTextColor(black)
 
         val container = findViewById<ConstraintLayout>(containerId)
@@ -429,6 +426,37 @@ class Dashboard : AppCompatActivity() {
         constraintSet.connect(id, ConstraintSet.START, containerId, ConstraintSet.START, 8f.toPx())
         constraintSet.connect(id, ConstraintSet.TOP, prevId, ConstraintSet.BOTTOM, 4f.toPx())
         constraintSet.applyTo(container)
+    }
+
+    private fun createTitipanItemReturnTs(prevId: Int, returnTs: Long) {
+        val returnTsTextView = TextView(this)
+        returnTsTextView.layoutParams = Constraints.LayoutParams(
+            Constraints.LayoutParams.WRAP_CONTENT,
+            Constraints.LayoutParams.WRAP_CONTENT
+        )
+
+        val id = View.generateViewId()
+        returnTsTextView.id = id
+
+        val dtStr = returnTs.toDT()
+
+        val text = "Dikembalikan pada: $dtStr"
+        returnTsTextView.text = text
+        returnTsTextView.setTextColor(black)
+
+        val container = findViewById<ConstraintLayout>(containerId)
+        container.addView(returnTsTextView)
+
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(container)
+        constraintSet.connect(id, ConstraintSet.START, containerId, ConstraintSet.START, 8f.toPx())
+        constraintSet.connect(id, ConstraintSet.TOP, prevId, ConstraintSet.BOTTOM, 4f.toPx())
+        constraintSet.applyTo(container)
+    }
+
+    private fun setRunCnt(cnt: Int) {
+        val text = "Titipan Berjalan ($cnt)"
+        running_title.text = text
     }
 
     private fun addMarginBottomRun(lastIdRun: Int) {
@@ -445,11 +473,6 @@ class Dashboard : AppCompatActivity() {
         constraintSetHist.connect(lastIdHist, ConstraintSet.BOTTOM,
             container_history.id, ConstraintSet.BOTTOM, 8f.toPx())
         constraintSetHist.applyTo(container_history)
-    }
-
-    private fun setRunCnt(cnt: Int) {
-        val text = "Titipan Berjalan ($cnt)"
-        running_title.text = text
     }
 
 }
