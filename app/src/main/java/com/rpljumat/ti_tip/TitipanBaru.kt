@@ -166,7 +166,7 @@ class TitipanBaru : AppCompatActivity() {
                     val notifBuilder = NotificationCompat.Builder(applicationContext, "Ti-Tip")
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Titipan $namaTitipan berhasil dibuat")
-                        .setContentText("Silahkan selesai titipan dalam 1 x 24 jam")
+                        .setContentText("Silahkan selesaikan titipan dalam 1 x 24 jam")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setAutoCancel(true)
                     notifMgr.notify(0, notifBuilder.build())
@@ -179,12 +179,6 @@ class TitipanBaru : AppCompatActivity() {
                     finish()
                 }
         }
-    }
-
-    private suspend fun getAgentId(db: FirebaseFirestore, agentName: String): String {
-        Log.d("TitipanBaru", agentName)
-        val allAgent = db.collection("agent").whereEqualTo("agentName", agentName).get().await()
-        return allAgent.documents[0].id
     }
 
 }

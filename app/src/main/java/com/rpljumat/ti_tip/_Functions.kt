@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.location.Geocoder
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
@@ -55,6 +56,12 @@ fun Int.getStatusInfo(): Pair<String, Int> {
         EXPIRED -> return Pair("Kadaluarsa", statRed)
     }
     return Pair("", 0) // else condition
+}
+
+suspend fun getAgentId(db: FirebaseFirestore, agentName: String): String {
+    Log.d("TitipanBaru", agentName)
+    val allAgent = db.collection("agent").whereEqualTo("agentName", agentName).get().await()
+    return allAgent.documents[0].id
 }
 
 suspend fun getAgentName(agentId: String): String {

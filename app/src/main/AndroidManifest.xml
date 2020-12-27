@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rpljumat.ti_tip">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -18,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-
+        <activity android:name=".UserInfo"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,33 +33,21 @@
         <activity
             android:name=".PetaPilihAgen"
             android:label="@string/title_activity_peta_pilih_agen" />
-        <activity
-            android:name=".PindahTitip"
-            android:exported="true" />
-        <activity
-            android:name=".UserRegis"
-            android:exported="true" />
-        <activity
-            android:name=".Help"
-            android:exported="true" />
-        <activity
-            android:name=".RiwayatTitipan"
-            android:exported="true" />
-        <activity
-            android:name=".Login"
-            android:exported="true" />
-        <activity
-            android:name=".KonfirmasiUser"
-            android:exported="true" />
-        <activity
-            android:name=".Dashboard"
-            android:exported="true" />
-        <activity
-            android:name=".DetailTitipan"
-            android:exported="true" />
-        <activity
-            android:name=".TitipanBaru"
-            android:exported="true" />
+        <activity android:name=".PindahTitip" />
+        <activity android:name=".UserRegis" />
+        <activity android:name=".Help" />
+        <activity android:name=".RiwayatTitipan" />
+        <activity android:name=".Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".KonfirmasiUser" />
+        <activity android:name=".Dashboard" />
+        <activity android:name=".DetailTitipan" />
+        <activity android:name=".TitipanBaru" />
     </application>
 
 </manifest>

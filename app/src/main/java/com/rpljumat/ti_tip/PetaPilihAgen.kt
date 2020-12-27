@@ -39,7 +39,6 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private lateinit var activityContext: PetaPilihAgen
     var conn = false
 
     companion object{
@@ -50,8 +49,6 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_peta_pilih_agen)
-
-        activityContext = this
 
         // Check internet connection first
         CoroutineScope(Dispatchers.Main).launch {
@@ -69,7 +66,7 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        Places.initialize(applicationContext, "AIzaSyAIFeyTS267frdxcX7ok5CXT8CmDvJxRsU")
+        Places.initialize(this, "AIzaSyAIFeyTS267frdxcX7ok5CXT8CmDvJxRsU")
         initAutoCompleteFragment()
 
         back.setOnClickListener {
@@ -109,7 +106,7 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
     }
 
     private fun alertNoConnection() {
-        val builder = AlertDialog.Builder(activityContext)
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("Tidak ada koneksi!")
             .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
             .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background_gradient"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     tools:context=".PindahTitip">
 
     <ImageButton
@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_back"
-        android:scaleY="2"
-        android:scaleX="2"
         android:layout_marginTop="50dp"
+        android:background="@color/transparent"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,8 +24,8 @@
         android:id="@+id/logo_pindah_titip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_logo"
         android:layout_marginTop="24dp"
+        android:src="@drawable/ic_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,94 +48,74 @@
         android:id="@+id/pindah_titip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_pindah_titip"
-        android:textColor="@color/black"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo_pindah_titip" />
-
-    <TextView
-        android:id="@+id/nama_titipan_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="220dp"
-        android:text="@string/nama_titipan"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pindah_titip" />
-
-    <EditText
-        android:id="@+id/info_nama_titip"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="100dp"
-        android:background="@color/field_bg"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nama_titipan_user" />
+        app:layout_constraintTop_toTopOf="@id/view_pindah_titip" />
 
     <TextView
         android:id="@+id/lokasi_sekarang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="198dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/lokasi_sekarang"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_nama_titip" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/view_pindah_titip"
+        app:layout_constraintTop_toBottomOf="@id/pindah_titip" />
 
-    <EditText
-        android:id="@+id/info_lokasi_sekarang"
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/curr_loc_pindah_titip"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="100dp"
-        android:background="@color/field_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/lokasi_sekarang" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/view_pindah_titip"
+        app:layout_constraintStart_toStartOf="@id/view_pindah_titip"
+        app:layout_constraintTop_toBottomOf="@id/lokasi_sekarang" />
 
     <TextView
         android:id="@+id/lokasi_tujuan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="215dp"
+        android:layout_marginTop="16dp"
         android:text="@string/lokasi_tujuan"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_lokasi_sekarang" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/lokasi_sekarang"
+        app:layout_constraintTop_toBottomOf="@id/curr_loc_pindah_titip" />
 
     <Button
         android:id="@+id/tombol_pilih_lokasi"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:background="@color/white"
-        android:text="@string/pilih_lokasi"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_lokasi_sekarang" />
-
-    <EditText
-        android:id="@+id/lokasi_yang_dipilih"
-        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@color/field_bg"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lokasi_tujuan" />
+        android:layout_marginStart="16dp"
+        android:background="@color/btn_bg"
+        android:text="@string/pilih_lokasi"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/lokasi_tujuan"
+        app:layout_constraintStart_toEndOf="@id/lokasi_tujuan"
+        app:layout_constraintTop_toTopOf="@id/lokasi_tujuan" />
+
+    <TextView
+        android:id="@+id/lokasi_yang_dipilih"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/view_pindah_titip"
+        app:layout_constraintStart_toStartOf="@id/view_pindah_titip"
+        app:layout_constraintTop_toBottomOf="@id/tombol_pilih_lokasi" />
 
     <TextView
         android:id="@+id/estimasi_biaya_kirim"
@@ -143,30 +123,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/estimasi_kirim"
+        android:textSize="20sp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/view_pindah_titip"
+        app:layout_constraintStart_toStartOf="@id/view_pindah_titip"
         app:layout_constraintTop_toBottomOf="@id/lokasi_yang_dipilih" />
 
-    <EditText
+    <TextView
         android:id="@+id/hasil_biaya"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@color/field_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/est_shipment_cost"
+        android:textStyle="italic|bold"
+        android:textSize="24sp"
+        android:textColor="@color/red"
+        app:layout_constraintEnd_toEndOf="@id/view_pindah_titip"
+        app:layout_constraintStart_toStartOf="@id/view_pindah_titip"
         app:layout_constraintTop_toBottomOf="@id/estimasi_biaya_kirim" />
 
     <Button
         android:id="@+id/tombol_pindah_titip"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="@color/btn_yellow"
         android:text="@string/pindah_tombol"
+        android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/view_pindah_titip"
+        app:layout_constraintStart_toStartOf="@id/view_pindah_titip"
         app:layout_constraintTop_toBottomOf="@id/hasil_biaya" />
 </androidx.constraintlayout.widget.ConstraintLayout>

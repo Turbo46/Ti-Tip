@@ -170,7 +170,7 @@ class Dashboard : AppCompatActivity() {
                 val status = (data["status"] as Long).toInt()
                 val goodId = good.id
                 val nama = data["nama"] as String
-                val length = (data["height"] as Double).toFloat()
+                val length = (data["length"] as Double).toFloat()
                 val width = (data["width"] as Double).toFloat()
                 val height = (data["height"] as Double).toFloat()
                 val weight = (data["weight"] as Double).toFloat()

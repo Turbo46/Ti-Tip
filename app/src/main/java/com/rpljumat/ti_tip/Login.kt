@@ -1,23 +1,24 @@
 package com.rpljumat.ti_tip
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class Login : AppCompatActivity() {
-    private lateinit var activityContext: Login
     var conn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +27,10 @@ class Login : AppCompatActivity() {
 
         // Get current user
         val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
+        var currentUser = auth.currentUser
         // If already logged in, go to Dashboard
         if(currentUser != null){
-            val dashboard = Intent(applicationContext, Dashboard::class.java)
+            val dashboard = Intent(this, Dashboard::class.java)
             startActivity(dashboard)
             finish()
         }
@@ -50,10 +51,26 @@ class Login : AppCompatActivity() {
 
             auth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener {
-                    Toast.makeText(this@Login, "Login berhasil", Toast.LENGTH_SHORT).show()
-                    val dashboard = Intent(applicationContext, Dashboard::class.java)
-                    startActivity(dashboard)
-                    finish()
+                    currentUser = auth.currentUser
+                    val uId = currentUser!!.uid
+                    CoroutineScope(Dispatchers.Main).launch {
+                        // Check if logged in into agent account
+                        val db = FirebaseFirestore.getInstance()
+                        val userDoc = db.collection("user").document(uId).get().await()
+                        // Logout immediately if logged in into user account
+                        if (!userDoc.exists()) {
+                            auth.signOut()
+                            email_text_login.text.clear()
+                            password_text.text.clear()
+                            Toast.makeText(this@Login, "Anda bukan user!", Toast.LENGTH_SHORT)
+                                .show()
+                            return@launch
+                        }
+                        Toast.makeText(this@Login, "Login berhasil", Toast.LENGTH_SHORT).show()
+                        val dashboard = Intent(applicationContext, Dashboard::class.java)
+                        startActivity(dashboard)
+                        finish()
+                    }
                 }
                 .addOnFailureListener {
                     // Check internet connection first
@@ -71,8 +88,8 @@ class Login : AppCompatActivity() {
         }
 
         regis_btn.setOnClickListener {
-            val login = Intent(applicationContext, UserRegis::class.java)
-            startActivity(login)
+            val regis = Intent(this, UserRegis::class.java)
+            startActivity(regis)
             finish()
         }
     }
@@ -97,7 +114,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun alertNoConnection() {
-        val builder = AlertDialog.Builder(activityContext)
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("Tidak ada koneksi!")
             .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
             .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->
