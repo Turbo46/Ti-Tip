@@ -3,7 +3,6 @@ package com.rpljumat.ti_tip
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.Network
@@ -26,7 +25,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class Dashboard : AppCompatActivity() {
-    private lateinit var activityContext: Dashboard
     var conn = false
 
     private var containerId = 0
@@ -34,8 +32,6 @@ class Dashboard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
-        activityContext = this
 
         // Check internet connection first
         CoroutineScope(Dispatchers.Main).launch {
@@ -46,6 +42,11 @@ class Dashboard : AppCompatActivity() {
                 alertNoConnection()
                 return@launch
             }
+        }
+
+        user_icon.setOnClickListener {
+            val user = Intent(this, UserInfo::class.java)
+            startActivity(user)
         }
 
         expand_running.tag = R.drawable.ic_collapse
@@ -117,8 +118,16 @@ class Dashboard : AppCompatActivity() {
 
         history_more_text.setOnClickListener {
             val riwayatTitipan = Intent(this, RiwayatTitipan::class.java)
+            riwayatTitipan.putExtra("User ID", uid)
             startActivity(riwayatTitipan)
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        finish()
+        val intent = Intent(applicationContext, this::class.java)
+        startActivity(intent)
     }
 
     private fun checkNetworkConnection() {
@@ -141,7 +150,7 @@ class Dashboard : AppCompatActivity() {
     }
 
     private fun alertNoConnection() {
-        val builder = AlertDialog.Builder(activityContext)
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("Tidak ada koneksi!")
             .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
             .setPositiveButton("Coba lagi") { _: DialogInterface, _: Int ->
@@ -155,7 +164,7 @@ class Dashboard : AppCompatActivity() {
                 }
             }
             .setCancelable(false)
-        builder.show()
+            .show()
     }
 
     private fun settle(goods: QuerySnapshot) {

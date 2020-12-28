@@ -26,7 +26,7 @@ const val MS_SEHARI = 86_400_000
 
 val black = Color.parseColor("#000000")
 
-class User(val nama: String, val username: String, val nik: String, val phone: String)
+class User(val nama: String, val nik: String, val phone: String)
 class Goods(val userId: String, val agentId: String, val nama: String, val agentCnt: Int,
                    val status: Int, val ts: Long, val exp: Long, val estPrice: Int,
                    val length: Float, val width: Float, val height: Float, val weight: Float,

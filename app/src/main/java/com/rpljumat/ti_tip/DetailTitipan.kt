@@ -1,6 +1,5 @@
 package com.rpljumat.ti_tip
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.NotificationManager
 import android.content.Context
@@ -10,11 +9,11 @@ import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.Constraints
 import androidx.core.app.NotificationCompat
@@ -31,14 +30,10 @@ class DetailTitipan : AppCompatActivity() {
 
     var conn = false
 
-    lateinit var goodsId: String
-    lateinit var nama: String
-    lateinit var agentName: String
+    private lateinit var goodsId: String
+    private lateinit var nama: String
+    private lateinit var agentName: String
     private var estPrice = 0
-
-    companion object {
-        const val PINDAH_TITIP_STATUS = 1
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +45,7 @@ class DetailTitipan : AppCompatActivity() {
                 checkNetworkConnection()
             }
             if(!conn) {
-                alertNoConnection()
+                alertNoConnection(false)
                 return@launch
             }
         }
@@ -133,46 +128,14 @@ class DetailTitipan : AppCompatActivity() {
             val pindahTitip = Intent(this, PindahTitip::class.java)
             pindahTitip.putExtra("ID titipan", goodsId)
             pindahTitip.putExtra("Nama titipan", nama)
-
             val currLocText = location_detail_titipan.text.toString()
             pindahTitip.putExtra("Lokasi sekarang", currLocText)
-            startActivityForResult(pindahTitip, PINDAH_TITIP_STATUS)
+
+            startActivity(pindahTitip)
         }
 
         return_btn_detail_titipan.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Konfirmasi permintaan pengembalian")
-                .setMessage("Yakin untuk meminta pengembalian titipan $nama?")
-                .setPositiveButton("Ya") { _: DialogInterface, _: Int ->
-                    db.collection("goods").document(goodsId).update("status", AWAITING_RETURN)
-                        .addOnSuccessListener {
-                            Toast.makeText(this@DetailTitipan,
-                                "Permintaan pengembalian terkirim!", Toast.LENGTH_SHORT).show()
-
-                            val notifMgr = getSystemService(Context.NOTIFICATION_SERVICE)
-                                as NotificationManager
-                            val notifBuilder = NotificationCompat.Builder(
-                                applicationContext, "Ti-Tip")
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("Permintaan pengembalian titipan $nama" +
-                                    "berhasil dibuat")
-                                .setContentText("Silahkan datang ke agen $agentName " +
-                                    "untuk membayar biaya titipan sebesar $estPrice " +
-                                    "dan mengambil titipan")
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .setAutoCancel(true)
-                            notifMgr.notify(0, notifBuilder.build())
-
-                            finish()
-                        }
-                        .addOnFailureListener {
-
-                        }
-                }
-                .setNegativeButton("Tidak") { _: DialogInterface, _: Int ->
-
-                }
-            builder.show()
+            onReturnListener(db)
         }
 
     }
@@ -196,12 +159,65 @@ class DetailTitipan : AppCompatActivity() {
         )
     }
 
-    private fun alertNoConnection() {
+    private fun alertNoConnection(isOpenedBefore: Boolean) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Tidak ada koneksi!")
             .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
             .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->
-                finish()
+                if(!isOpenedBefore) finish()
+            }
+            .setOnCancelListener {
+                if(!isOpenedBefore) finish()
+            }
+            .show()
+    }
+
+    private fun onReturnListener(db: FirebaseFirestore) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Konfirmasi permintaan pengembalian")
+            .setMessage("Yakin untuk meminta pengembalian titipan $nama?")
+            .setPositiveButton("Ya") { _: DialogInterface, _: Int ->
+                CoroutineScope(Dispatchers.Main).launch {
+                    // Check internet connection first
+                    withContext(Dispatchers.Default) {
+                        checkNetworkConnection()
+                    }
+                    if(!conn) {
+                        alertNoConnection(true)
+                        return@launch
+                    }
+
+                    db.collection("goods").document(goodsId).update("status", AWAITING_RETURN)
+                        .addOnSuccessListener {
+                            Toast.makeText(this@DetailTitipan,
+                                "Permintaan pengembalian terkirim!", Toast.LENGTH_SHORT).show()
+
+                            val notifMgr = getSystemService(Context.NOTIFICATION_SERVICE)
+                                as NotificationManager
+                            val notifBuilder = NotificationCompat.Builder(
+                                applicationContext, "Ti-Tip")
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Permintaan pengembalian titipan $nama" +
+                                    "berhasil dibuat")
+                                .setContentText("Silahkan datang ke agen $agentName " +
+                                    "untuk membayar biaya titipan sebesar $estPrice " +
+                                    "dan mengambil titipan")
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setAutoCancel(true)
+                            notifMgr.notify(0, notifBuilder.build())
+
+                            // Close all child activities and refresh the dashboard
+                            finishAffinity()
+                            val dashboard = Intent(applicationContext, Dashboard::class.java)
+                            startActivity(dashboard)
+                        }
+                        .addOnFailureListener {
+
+                        }
+                }
+            }
+            .setNegativeButton("Tidak") { _: DialogInterface, _: Int ->
+
             }
         builder.show()
     }
@@ -258,15 +274,5 @@ class DetailTitipan : AppCompatActivity() {
         cs.clear(responsibleLabelId, ConstraintSet.TOP)
         cs.connect(responsibleLabelId, ConstraintSet.TOP, newLocId, ConstraintSet.BOTTOM, 16f.toPx())
         cs.applyTo(container_inner_detail_titipan)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == PINDAH_TITIP_STATUS) {
-            if(resultCode == Activity.RESULT_OK) {
-                finish()
-            }
-        }
     }
 }

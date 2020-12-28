@@ -171,7 +171,10 @@ class TitipanBaru : AppCompatActivity() {
                         .setAutoCancel(true)
                     notifMgr.notify(0, notifBuilder.build())
 
-                    finish()
+                    // Close all child activities and refresh the dashboard
+                    finishAffinity()
+                    val intent = Intent(applicationContext, Dashboard::class.java)
+                    startActivity(intent)
                 }
                 .addOnFailureListener {
                     Toast.makeText(this@TitipanBaru, "Penitipan gagal!", Toast.LENGTH_SHORT)

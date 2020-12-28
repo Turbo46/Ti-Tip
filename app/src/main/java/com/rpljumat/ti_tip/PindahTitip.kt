@@ -1,9 +1,14 @@
 package com.rpljumat.ti_tip
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.NotificationManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +21,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class PindahTitip : AppCompatActivity() {
+    var conn = false
 
     companion object {
         const val ADDRESS_DATA = 1
@@ -47,11 +54,23 @@ class PindahTitip : AppCompatActivity() {
 
         tombol_pindah_titip.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-
+                // Check internet connection first
+                withContext(Dispatchers.Default) {
+                    checkNetworkConnection()
+                }
+                if(!conn) {
+                    alertNoConnection()
+                    return@launch
+                }
 
                 val db = FirebaseFirestore.getInstance()
                 val doc = db.collection("goods").document(goodsId)
                 val destLocText = lokasi_yang_dipilih.text.toString()
+                if(destLocText == "") {
+                    Toast.makeText(this@PindahTitip,
+                        "Lokasi tujuan belum dipilih!", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
                 val agentName = destLocText.lines()[0]
                 val agentDest = getAgentId(db, agentName)
                 val updateData = hashMapOf(
@@ -82,9 +101,10 @@ class PindahTitip : AppCompatActivity() {
                             .setAutoCancel(true)
                         notifMgr.notify(0, notifBuilder.build())
 
-                        val alamat = Intent(applicationContext, DetailTitipan::class.java)
-                        setResult(Activity.RESULT_OK, alamat)
-                        finish()
+                        // Close all child activities and refresh the dashboard
+                        finishAffinity()
+                        val dashboard = Intent(applicationContext, Dashboard::class.java)
+                        startActivity(dashboard)
                     }
                     .addOnFailureListener {
 
@@ -101,5 +121,34 @@ class PindahTitip : AppCompatActivity() {
                 lokasi_yang_dipilih.text = data!!.getStringExtra("Alamat")
             }
         }
+    }
+
+    private fun checkNetworkConnection() {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder = NetworkRequest.Builder()
+        cm.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    conn = true
+                }
+
+                override fun onUnavailable() {
+                    super.onUnavailable()
+                    conn = false
+                }
+            }
+        )
+    }
+
+    private fun alertNoConnection() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Tidak ada koneksi!")
+            .setMessage("Pastikan Wi-Fi atau data seluler telah dinyalakan, lalu coba lagi")
+            .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->
+
+            }
+            .show()
     }
 }

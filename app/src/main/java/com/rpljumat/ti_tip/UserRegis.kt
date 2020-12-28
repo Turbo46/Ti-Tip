@@ -36,7 +36,6 @@ class UserRegis : AppCompatActivity() {
         }
         regis_btn.setOnClickListener {
             val nama = fullname_text.text.toString()
-            val username = username_text.text.toString()
             val nik = nik_text.text.toString()
             val phone = nope_text.text.toString()
             val email = email_text.text.toString()
@@ -45,11 +44,6 @@ class UserRegis : AppCompatActivity() {
             when {
                 nama.isEmpty() -> {
                     Toast.makeText(this@UserRegis, "Nama belum diisi!", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                username.isEmpty() -> {
-                    Toast.makeText(this@UserRegis, "Username belum diisi!", Toast.LENGTH_SHORT)
-                        .show()
                     return@setOnClickListener
                 }
                 nik.isEmpty() -> {
@@ -77,7 +71,7 @@ class UserRegis : AppCompatActivity() {
                 .addOnSuccessListener {
                     val uid = auth.uid ?: ""
                     val db = FirebaseFirestore.getInstance()
-                    val user = User(nama, username, nik, phone)
+                    val user = User(nama, nik, phone)
 
                     db.collection("users")
                         .document(uid)

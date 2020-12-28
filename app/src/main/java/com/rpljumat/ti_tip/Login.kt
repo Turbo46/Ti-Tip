@@ -56,7 +56,7 @@ class Login : AppCompatActivity() {
                     CoroutineScope(Dispatchers.Main).launch {
                         // Check if logged in into agent account
                         val db = FirebaseFirestore.getInstance()
-                        val userDoc = db.collection("user").document(uId).get().await()
+                        val userDoc = db.collection("users").document(uId).get().await()
                         // Logout immediately if logged in into user account
                         if (!userDoc.exists()) {
                             auth.signOut()

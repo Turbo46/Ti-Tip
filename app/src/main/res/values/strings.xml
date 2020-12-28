@@ -18,7 +18,6 @@
     <string name="goods_detail_est_price_label">Estimasi biaya</string>
     <string name="pindah_titip">Pindah Titip</string>
     <string name="return_goods">Kembalikan</string>
-    <string name="username_label">Username</string>
     <string name="password_label">Password</string>
     <string name="login_btn_txt">Login</string>
     <string name="register_question">Apakah anda tidak mempunyai akun?</string>
@@ -55,4 +54,12 @@
     <string name="choosen_loc_label">Lokasi Terpilih: </string>
     <string name="search_loc_label">Pencarian Lokasi …</string>
     <string name="est_shipment_cost">Rp15000</string>
+    <string name="change">Ubah</string>
+    <string name="change_password">Ubah kata sandi</string>
+    <string name="logout">Keluar</string>
+    <string name="curr_password">Sandi sekarang:</string>
+    <string name="new_password">Sandi baru:</string>
+    <string name="confirm_password">Konfirmasi sandi:</string>
+    <string name="new_email">Email baru:</string>
+    <string name="new_phone">Nomor baru:</string>
 </resources>

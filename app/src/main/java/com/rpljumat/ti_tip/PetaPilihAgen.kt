@@ -112,7 +112,10 @@ class PetaPilihAgen : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarke
             .setPositiveButton("Kembali") { _: DialogInterface, _: Int ->
                 finish()
             }
-        builder.show()
+            .setOnCancelListener {
+                finish()
+            }
+            .show()
     }
 
     /**
