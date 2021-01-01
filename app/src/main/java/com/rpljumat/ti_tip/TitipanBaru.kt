@@ -1,17 +1,15 @@
 package com.rpljumat.ti_tip
 
-import android.app.*
-import android.content.Context
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_titipan_baru.*
@@ -158,23 +156,14 @@ class TitipanBaru : AppCompatActivity() {
             goodsCollection.document(doc).collection("agentHist")
                 .document("agentHist").set(hashMapOf("1" to agentId))
                 .addOnSuccessListener {
-                    Toast.makeText(this@TitipanBaru, "Penitipan berhasil!", Toast.LENGTH_SHORT)
-                        .show()
-
-                    val notifMgr = getSystemService(Context.NOTIFICATION_SERVICE)
-                        as NotificationManager
-                    val notifBuilder = NotificationCompat.Builder(applicationContext, "Ti-Tip")
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Titipan $namaTitipan berhasil dibuat")
-                        .setContentText("Silahkan selesaikan titipan dalam 1 x 24 jam")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setAutoCancel(true)
-                    notifMgr.notify(0, notifBuilder.build())
-
                     // Close all child activities and refresh the dashboard
                     finishAffinity()
-                    val intent = Intent(applicationContext, Dashboard::class.java)
-                    startActivity(intent)
+                    val konfirmasiUser = Intent(applicationContext, KonfirmasiUser::class.java)
+                    konfirmasiUser.putExtra("Nama Titipan", namaTitipan)
+                    konfirmasiUser.putExtra("Lokasi Titipan", loc)
+                    konfirmasiUser.putExtra("Grocery", groceryStat)
+                    konfirmasiUser.putExtra("Fragile", fragileStat)
+                    startActivity(konfirmasiUser)
                 }
                 .addOnFailureListener {
                     Toast.makeText(this@TitipanBaru, "Penitipan gagal!", Toast.LENGTH_SHORT)

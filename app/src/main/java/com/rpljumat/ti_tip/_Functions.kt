@@ -25,6 +25,7 @@ const val HIST_BLOCK = 2
 const val MS_SEHARI = 86_400_000
 
 val black = Color.parseColor("#000000")
+val red = Color.parseColor("#FF0000")
 
 class User(val nama: String, val nik: String, val phone: String)
 class Goods(val userId: String, val agentId: String, val nama: String, val agentCnt: Int,
@@ -68,7 +69,7 @@ suspend fun getAgentName(agentId: String): String {
     val db = FirebaseFirestore.getInstance()
     val docRef = db.collection("agent").document(agentId).get().await()
     val data = docRef.data
-    return data?.get("agentName") as String
+    return data?.get("agentName").toString()
 }
 
 suspend fun getAgentCoords(agentId: String): Pair<Double, Double> {

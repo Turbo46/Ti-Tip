@@ -34,70 +34,110 @@
         android:layout_marginTop="16dp"
         android:text="@string/konfirmasi_titipan_user"
         android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/konfirmasi_logo" />
 
-    <EditText
-        android:id="@+id/id_titipan"
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/nama_titipan_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@color/field_bg"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/nama_titipan"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_konfirmasi" />
 
-    <EditText
+    <TextView
         android:id="@+id/nama_titipan"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/field_bg"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_titipan" />
+        app:layout_constraintStart_toEndOf="@id/nama_titipan_label"
+        app:layout_constraintTop_toTopOf="@id/nama_titipan_label" />
 
-    <EditText
-        android:id="@+id/lokasi_penitipan"
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/lokasi_penitipan_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@color/field_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/lokasi_titipan_konfirmasi"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/nama_titipan_label"
         app:layout_constraintTop_toBottomOf="@id/nama_titipan" />
+
+    <TextView
+        android:id="@+id/lokasi_penitipan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lokasi_penitipan_label"
+        app:layout_constraintTop_toTopOf="@id/lokasi_penitipan_label" />
+
+    <TextView
+        android:id="@+id/grocery_konfirmasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/lokasi_penitipan_label"
+        app:layout_constraintTop_toBottomOf="@id/lokasi_penitipan" />
+
+    <TextView
+        android:id="@+id/separ_fragile_grocery_konfirmasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/separ_slash"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/grocery_konfirmasi"
+        app:layout_constraintStart_toEndOf="@id/grocery_konfirmasi"
+        app:layout_constraintTop_toTopOf="@id/grocery_konfirmasi" />
+
+    <TextView
+        android:id="@+id/fragile_konfirmasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/separ_fragile_grocery_konfirmasi"
+        app:layout_constraintStart_toEndOf="@id/separ_fragile_grocery_konfirmasi"
+        app:layout_constraintTop_toTopOf="@id/separ_fragile_grocery_konfirmasi" />
 
     <Button
         android:id="@+id/tombol_konfirmasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="konfirmasi"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:background="@color/btn_yellow"
         android:text="@string/konfirmasi_user"
+        android:textAllCaps="false"
         android:textColor="@color/black"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lokasi_penitipan" />
+        app:layout_constraintTop_toBottomOf="@id/grocery_konfirmasi" />
 
     <TextView
-        android:id="@+id/peringatan_konfirmasi"
+        android:id="@+id/confirmation_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/peringatan_konfirmasi"
+        android:text="@string/pesan_konfirmasi_titipan_baru"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tombol_konfirmasi" />
-
-    <TextView
-        android:id="@+id/lanjutan_peringatan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lanjutan_peringatan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/peringatan_konfirmasi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

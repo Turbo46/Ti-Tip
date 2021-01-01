@@ -59,13 +59,13 @@ class DetailTitipan : AppCompatActivity() {
         db.collection("goods").document(goodsId).get()
             .addOnSuccessListener {
                 CoroutineScope(Dispatchers.Main).launch {
-                    val data = it.data
-                    nama = data?.get("nama") as String
+                    val data = it.data!!
+                    nama = data["nama"].toString()
                     val status = (data["status"] as Long).toInt()
                     val statusPair = status.getStatusInfo()
                     val statusText = statusPair.first
                     val statusColor = statusPair.second
-                    val agentId = data["agentId"] as String
+                    val agentId = data["agentId"].toString()
                     agentName = getAgentName(agentId)
                     val agentCoords = getAgentCoords(agentId)
                     val agentLoc = getAgentLoc(agentCoords, this@DetailTitipan)
@@ -90,7 +90,7 @@ class DetailTitipan : AppCompatActivity() {
 
                     if(status == AWAITING_PINDAH_TITIP_ORG ||
                         status == AWAITING_PINDAH_TITIP_DEST) {
-                        val agentDest = data["agentDest"] as String
+                        val agentDest = data["agentDest"].toString()
                         addAgentDestField(agentDest)
                     }
 
@@ -226,7 +226,7 @@ class DetailTitipan : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("agent").document(agentId).get().await()
         val data = docRef.data
-        return data?.get("responsiblePerson") as String
+        return data?.get("responsiblePerson").toString()
     }
 
     private suspend fun addAgentDestField(agentDest: String) {

@@ -178,7 +178,7 @@ class Dashboard : AppCompatActivity() {
                 val data = good.data
                 val status = (data["status"] as Long).toInt()
                 val goodId = good.id
-                val nama = data["nama"] as String
+                val nama = data["nama"].toString()
                 val length = (data["length"] as Double).toFloat()
                 val width = (data["width"] as Double).toFloat()
                 val height = (data["height"] as Double).toFloat()
@@ -188,9 +188,9 @@ class Dashboard : AppCompatActivity() {
                 val agentId =
                     if(status == AWAITING_PINDAH_TITIP_ORG ||
                         status == AWAITING_PINDAH_TITIP_DEST) {
-                        data["agentDest"] as String
+                        data["agentDest"].toString()
                     } else {
-                        data["agentId"] as String
+                        data["agentId"].toString()
                     }
                 val agentName = getAgentName(agentId)
 

@@ -53,28 +53,27 @@ class RiwayatTitipan : AppCompatActivity() {
             val db = FirebaseFirestore.getInstance()
             val allHistoryStatus = mutableListOf(REJECTED, RETURNED, EXPIRED)
             val uid = intent.getStringExtra("User ID")!!
-            val query = db.collection("goods").whereIn("status", allHistoryStatus).get().await()
+            val query = db.collection("goods")
+                .whereEqualTo("userId", uid)
+                .whereIn("status", allHistoryStatus)
+                .get().await()
             val documents = query.documents
-            for(document in documents) {
+            for((itemCnt, document) in documents.withIndex()) {
                 val data = document.data!!
-                val goodsUid = data["userId"] as String
-                if(goodsUid != uid) continue
                 val status = (data["status"] as Long).toInt()
-                if(!allHistoryStatus.contains(status)) continue
-
-                val namaTitipan = data["nama"] as String
-                val agentId = data["agentId"] as String
+                val namaTitipan = data["nama"].toString()
+                val agentId = data["agentId"].toString()
                 val agentName = getAgentName(agentId)
                 val fragile = data["fragile"] as Boolean
                 val grocery = data["grocery"] as Boolean
 
-                createHistoryBg()
+                createHistoryBg(itemCnt)
                 createTitipanTitle(namaTitipan)
                 createTitipanStatus(status)
                 createTitipanAgentName(agentName)
                 createTitipanFragileGrocery(fragile, grocery)
-                addMarginBottom()
             }
+            addMarginBottom()
         }
     }
 
@@ -110,7 +109,7 @@ class RiwayatTitipan : AppCompatActivity() {
             .show()
     }
 
-    private fun createHistoryBg() {
+    private fun createHistoryBg(itemCnt: Int) {
         val prevItemContainerId = itemContainer.id
         itemContainer = ConstraintLayout(this)
 
@@ -131,7 +130,8 @@ class RiwayatTitipan : AppCompatActivity() {
             container_history.id, ConstraintSet.RIGHT, 8f.toPx(),
             0.5f)
         constraintSet.connect(id, ConstraintSet.TOP,
-            prevItemContainerId, ConstraintSet.TOP, 8f.toPx())
+            prevItemContainerId, if(itemCnt == 0) ConstraintSet.TOP else ConstraintSet.BOTTOM,
+            8f.toPx())
         constraintSet.applyTo(container_history)
     }
 

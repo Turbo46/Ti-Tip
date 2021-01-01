@@ -59,8 +59,8 @@ class UserInfo : AppCompatActivity() {
             doc.get()
                 .addOnSuccessListener {
                     val data = it.data!!
-                    val nama = data["nama"] as String
-                    val phone = data["phone"] as String
+                    val nama = data["nama"].toString()
+                    val phone = data["phone"].toString()
                     val phoneMaskRule = Regex("^(\\d{4})\\d+(\\d{3})")
                     val maskedPhone = phone.replace(phoneMaskRule, "$1***$2")
 
